@@ -21,20 +21,24 @@ public class ViewTests {
     private Canvas mockCanvas;
     @Mock
     private Line mockLine;
+    @Mock
+    private View.FactoryHelper mockHelper;
     @InjectMocks
-    View view = new View(buildCanvas);
+    static View view;
 
     @BeforeAll
     static void initialiseCanvas() {
         String[] sArray = {"C", "10", "10"};
         Canvas canvas = new Canvas();
         buildCanvas = canvas.buildCanvas(sArray);
+        view = new View(buildCanvas);
     }
 
     @Test
     @DisplayName("When input is build canvas, buildCanvas is called")
     void whenCommandIsC_CallBuildCanvas() throws IOException {
         String[] str = {"C", "10", "10"};
+        char[][] expectedCanvas = initialiseArray(10, 10);
 
         when(br.readLine()).thenReturn("C 10 10").thenReturn("Q");
         when(mockCanvas.buildCanvas(str)).thenReturn(buildCanvas);
@@ -43,6 +47,7 @@ public class ViewTests {
 
         verify(br, times(2)).readLine();
         verify(mockCanvas, times(1)).buildCanvas(str);
+
     }
 
     @Test
@@ -51,6 +56,8 @@ public class ViewTests {
         String[] str = {"L", "2", "2", "9", "10"};
 
         when(br.readLine()).thenReturn("L 2 2 9 10").thenReturn("Q");
+        when(mockHelper.createLine(any(String[].class), any(char[][].class))).thenReturn(mockLine);
+//        doCallRealMethod().when(mockLine).buildLine();
 
         view.inputCommand(br);
 
@@ -93,22 +100,4 @@ public class ViewTests {
 //        verify(br, times(2)).readLine();
 //    }
 
-
-//    @Test
-//    @DisplayName("When input is bucketFill, fill is called")
-//    void whenCommandIsR_CallFill() throws IOException {
-//        String[] sArray = {"B", "1", "1", "G"};
-//        initialiseCanvas();
-//
-//        doReturn(br).when(view).getBr();
-//        doCallRealMethod().when(view).inputCommand();
-//
-//        when(br.readLine()).thenReturn("B 1 1 G").thenReturn("Q");
-//
-//        view.inputCommand();
-//
-//        verify(view, times(1)).fill(sArray);
-//        verify(view, times(2)).printCanvas();
-//    }
-//
 }

@@ -1,14 +1,19 @@
 package com.creditsuisse.codechallenge.canvas;
 
-import com.creditsuisse.codechallenge.view.View;
+public class Line {
 
-public class Line extends Shape {
-
+    int startX;
+    int startY;
+    int endX;
+    int endY;
     private char[][] canvasBuilt;
 
-    public Line(int startX, int startY, int endX, int endY, char[][] canvasBuilt) {
-        super(startX, startY, endX, endY);
-        this.canvasBuilt = canvasBuilt;
+    public Line(int startX, int startY, int endX, int endY, char[][] canvasModified) {
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+        this.canvasBuilt = canvasModified;
     }
 
     public char[][] buildLine() {

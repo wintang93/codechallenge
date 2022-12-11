@@ -1,14 +1,19 @@
 package com.creditsuisse.codechallenge.canvas;
 
-import com.creditsuisse.codechallenge.view.View;
+public class Rectangle{
 
-public class Rectangle extends Shape{
-
+    int startX;
+    int startY;
+    int endX;
+    int endY;
     private Line line;
     private char[][] canvasBuilt;
 
-    public Rectangle (int startX, int startY, int endX, int endY, char[][] canvasBuilt) {
-        super(startX, startY, endX, endY);
+    public Rectangle(int startX, int startY, int endX, int endY, char[][] canvasBuilt) {
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
         this.canvasBuilt = canvasBuilt;
     }
 

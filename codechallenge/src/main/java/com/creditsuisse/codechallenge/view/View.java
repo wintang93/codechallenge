@@ -7,7 +7,6 @@ import com.creditsuisse.codechallenge.canvas.Rectangle;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 //to print our canvas, lines and shape
 public class View {
@@ -16,7 +15,8 @@ public class View {
     private Line line;
     private Rectangle rectangle;
     private BucketFill bucketFill;
-    char[][] canvasBuilt;
+    private char[][] canvasBuilt;
+    private FactoryHelper helper = new FactoryHelper();
 
     String s = "";
 
@@ -43,14 +43,14 @@ public class View {
                     } catch (NumberFormatException e) {
                         System.out.println("Please provide coordinates.");
                     } catch (NullPointerException e) {
-                    System.out.println("Please provide canvas size.");
+                    System.out.println("Please create canvas first.");
                 }
                     continue;
                 }
                 //Build Line
                 if (sArray[0].equalsIgnoreCase("L")) {
                     try {
-                        line = new Line(Integer.parseInt(sArray[1]), Integer.parseInt(sArray[2]), Integer.parseInt(sArray[3]), Integer.parseInt(sArray[4]), canvasBuilt);
+                        line = helper.createLine(sArray, canvasBuilt);
                         canvasBuilt = line.buildLine();
                         printCanvas();
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -87,7 +87,7 @@ public class View {
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Please provide coordinates.");
                     } catch (NumberFormatException e) {
-                        System.out.println("Please provide coordinates.");
+                        System.out.println("Please provide correct coordinates.");
                     } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("Please provide colour.");
                     }
@@ -103,7 +103,7 @@ public class View {
 
     private void printCanvas() {
         try {
-            //printng canvas
+            //printing canvas
             for (int i = 0; i < canvasBuilt.length; i++) { //this equals to the row in our matrix.
                 for (int j = 0; j < canvasBuilt[i].length; j++) { //this equals to the column in each row.
                     System.out.print(canvasBuilt[i][j] + " ");
@@ -111,7 +111,14 @@ public class View {
                 System.out.println(); //change line on console as row comes to end in the matrix.
             }
         } catch (NullPointerException e) {
-            System.out.println("Please provide canvas size.");
+            System.out.println("Please provide canvas size. 1");
+        }
+    }
+
+    //This class is to assist with junit test
+    protected static class FactoryHelper{
+        Line createLine(String[] sArray, char[][] canvasBuilt) {
+            return new Line(Integer.parseInt(sArray[1]), Integer.parseInt(sArray[2]), Integer.parseInt(sArray[3]), Integer.parseInt(sArray[4]), canvasBuilt);
         }
     }
 }
